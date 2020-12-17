@@ -1,0 +1,132 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-6">
+      <h2>Smartphones</h2>
+    </div>
+    <div class="col-6">
+      <div class="row">
+        <div class="col-7">
+          <div class="form-group">
+            <!-- (input)="searchThis($event.target.value)" -->
+            <input
+              class="form-control"
+              type="text"
+              placeholder="Search by Name"
+              [(ngModel)]="filterargs"
+            />
+          </div>
+        </div>
+        <div class="col-5">
+          <button class="btn btn-primary" (click)="open(content)">
+            <i class="fa fa-plus"></i> &nbsp; Add Phone
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-12">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Brand Name</th>
+            <th scope="col">Batery Size (mAh)</th>
+            <th scope="col">Screen size (In)</th>
+            <th scope="col">Colors</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngIf="phones.length > 0">
+            <tr *ngFor="let phone of phones | namefilter: filterargs">
+              <th>{{ phone?.name }}</th>
+              <td>{{ phone?.brandName }}</td>
+              <td>{{ phone?.baterySize }}</td>
+              <td>{{ phone?.screenSize }}</td>
+              <td>{{ phone?.colors }}</td>
+              <td>
+                <i class="fa fa-edit" (click)="open(content, phone?._id)"></i>
+                &nbsp;
+                <i class="fa fa-trash" (click)="delete(phone?._id)"></i>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="phones.length == 0">
+            <tr>
+              <td class="text-center" colspan="5">No Records found</td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="productForm" (ngSubmit)="submitProduct()">
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <label for="dateOfBirth">Phone Name</label>
+            <div class="form-group">
+              <input class="form-control" type="text" formControlName="name" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="dateOfBirth">Brand Name</label>
+            <div class="form-group">
+              <input
+                class="form-control"
+                type="text"
+                formControlName="brandName"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="dateOfBirth">Batery Size (mAh)</label>
+            <div class="form-group">
+              <input
+                class="form-control"
+                type="text"
+                formControlName="baterySize"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="dateOfBirth">Screen Size (In)</label>
+            <div class="form-group">
+              <input
+                class="form-control"
+                type="text"
+                formControlName="screenSize"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <label>Colors</label>
+          <div class="form-group">
+            <textarea
+              class="form-control"
+              rows="12"
+              formControlName="colors"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-outline-dark">Save</button>
+    </div>
+  </form>
+</ng-template>
