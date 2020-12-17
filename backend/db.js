@@ -1,7 +1,7 @@
 const { json } = require("body-parser");
 const mongoose = require("mongoose");
 mongoose.connect(
-  "mongodb+srv://pritam:pritam@123@cluster0.6nci3.mongodb.net/phoneshop",
+  "mongodb",
   { useNewUrlParser: true, useUnifiedTopology: true },
   (err) => {
     if (!err) {
